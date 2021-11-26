@@ -96,7 +96,7 @@ pub  struct  VotingContract {
 }
 ```
 
-So here we defined the Struct with the 2 maps we discussed earlier, the next step is to initialize those maps so let's implement the Default as below:
+So here we defined the Struct with the 2 maps we discussed earlier, the next step is to implement the default constructor to initialize those maps so let's implement the Default as below:
 ```rust
 impl Default for VotingContract {
     fn default() -> Self {
