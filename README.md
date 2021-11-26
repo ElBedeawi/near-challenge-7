@@ -26,11 +26,19 @@ rustup target add wasm32-unknown-unknown
  3. NEAR command-line interface (near-cli)
 	 make sure you have node 12 or above
 
-	 ```node -v```
+```console
+node -v
+v14.15.5
+```
+	 
+ ![image](https://user-images.githubusercontent.com/1478503/143584371-5010ef5a-b300-4d65-89d4-0475ca98971f.png)
 
-	 Then run 
 
-	 ```npm  install -g near-cli```
+ Then run 
+
+ ```console
+npm  install -g near-cli
+```
 
 ## Create a new Rust project 
 
