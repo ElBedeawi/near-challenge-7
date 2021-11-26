@@ -1,6 +1,6 @@
 # Welcome to Create Voting Contract!
 
-Hi! I'm Wagih ElBedeawi, Junior is both Rust and Near but I'm trying to share what I know, I welcome any improvements. 
+Hi! I'm Wagih ElBedeawi, Junior in both Rust and Near but I'm trying to share what I know, I welcome any improvements. 
 
 # Creating a Rust Contract
 
@@ -145,18 +145,27 @@ it should show compiling for a while then at the end
 2- Deploy:
 
  - You can either deploy on your main account as bedeawi.testnet or create a subaccount like voting.bedeawi.testnet, creating the subaccount is easy just run the below but change `YOUR_ACCOUNT` with your account.
+
  - ```near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet```
+
  - now you can deploy your contract with
+
 	 ```near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID```
+
 	 Change `$ID` with either `YOUR_ACCOUNT.testnet` or `voting.YOUR_ACCOUNT.testnet`
 	It should run successfully and print something like
+
 	```Done deploying to voting.YOUR_ACCOUNT.testnet```
 
 3- let's test our contract by calling the `add_candidate` function:
 	run the below command in terminal
+
 	```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
+
 	This should result with this:
+
 	```Added Wagih !```
+
 	Yaaay it's working!!!
   
 4- Let's test adding Wagih again to check our Guard
