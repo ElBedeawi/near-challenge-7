@@ -10,11 +10,17 @@ We will be following this [Intro](https://docs.near.org/docs/develop/contracts/r
  1. Rust toolchain 
  	Open your terminal and run the below
 	
-	 ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
+```console
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
 	 
-	 ```source $HOME/.cargo/env```
+```console
+source $HOME/.cargo/env
+```
 	 
-	 ```rustup target add wasm32-unknown-unknown```
+ ```console
+rustup target add wasm32-unknown-unknown
+```
  2. A NEAR account
 		 As stated [Here](https://docs.near.org/docs/develop/contracts/rust/intro#creating-a-near-account) 
  3. NEAR command-line interface (near-cli)
@@ -64,7 +70,7 @@ edition = "2021"
 ### Editing lib.rs
 Now open the `lib.rs` file it should be empty.
 We will start by adding the near_sdk imports
-```
+```rust
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::{env, near_bindgen};
 ```
@@ -80,7 +86,7 @@ we need callers:
 At the end it seems we need to have 4 functions in our contract & 2 Maps in our struct
 
 Let's by our Contract Struct
-```
+```rust
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
 pub  struct  VotingContract {
@@ -91,7 +97,7 @@ pub  struct  VotingContract {
 ```
 
 So here we defined the Struct with the 2 maps we discussed earlier, the next step is to initialize those maps so let's implement the Default as below:
-```
+```rust
 impl Default for VotingContract {
     fn default() -> Self {
         Self {
@@ -105,7 +111,7 @@ impl Default for VotingContract {
 
 ## The Contract implementation
 First, let's define an empty contract
-```
+```rust
 #[near_bindgen]
 impl VotingContract {
 
@@ -113,7 +119,7 @@ impl VotingContract {
 ```
 
 Then let's add our first method add Candidate, it needs to take the name of the candidate as output and return a success message, so the function will need a parameter name of type String and it will return String.
-```
+```rust
 #[near_bindgen]
 impl VotingContract {
 	pub fn add_candidate(&mut self, name: String) -> String {
@@ -127,7 +133,7 @@ impl VotingContract {
 we created the function `add_candidate`, it has a String parameter `name`, It gets the contract candidates map and inserts the candidate name with a default value of zero as no one voted for the new candidate yet.
 
 What if you try to add an existing candidate? Let's add a guard.
-```
+```rust
 pub fn add_candidate(&mut self, name: String) -> String {
         
         if !self.candidates.get(&name).is_none() {
@@ -143,7 +149,9 @@ Here we added a simple check trying to get the candidate by using the `get` func
 #### Build and Deploy
 1- Go to your terminal again make sure you are inside the project folder and run the build command
 
-```cargo build --target wasm32-unknown-unknown --release```
+```console
+cargo build --target wasm32-unknown-unknown --release
+```
 
 it should show compiling for a while then at the end
 
@@ -156,29 +164,39 @@ it should show compiling for a while then at the end
 
  - You can either deploy on your main account as bedeawi.testnet or create a subaccount like voting.bedeawi.testnet, creating the subaccount is easy just run the below but change `YOUR_ACCOUNT` with your account.
 
- - ```near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet```
+ - ```console
+near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet
+```
 	
 ![image](https://user-images.githubusercontent.com/1478503/143576911-a3e375c7-1991-42b7-a038-c157c97f7729.png)
 
  - now you can deploy your contract with
 
- ```near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID```
+ ```console
+near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID
+```
 
  Change `$ID` with either `YOUR_ACCOUNT.testnet` or `voting.YOUR_ACCOUNT.testnet`
 It should run successfully and print something like
 
-```Done deploying to voting.YOUR_ACCOUNT.testnet```
+```console
+Done deploying to voting.YOUR_ACCOUNT.testnet
+```
 
 ![image](https://user-images.githubusercontent.com/1478503/143576746-3e2ef220-018b-4f4c-95fd-2a4c0414a048.png)
 
 3- let's test our contract by calling the `add_candidate` function:
 run the below command in terminal
 
-```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
+```console
+near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet
+```
 
 This should result with this:
 
-```Added Wagih !```
+```console
+Added Wagih !
+```
 
 ![image](https://user-images.githubusercontent.com/1478503/143576985-280aac83-4a41-433f-a6e8-be10739deec3.png)
 
@@ -187,11 +205,15 @@ Yaaay it's working!!! :tada: :tada:
 4- Let's test adding Wagih again to check our Guard
 run the same command again
 
-```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
+```console
+near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet
+```
 
 This time it should show this:
 
-```Candidate already exists```
+```console
+Candidate already exists
+```
 
 That's great :clap:, Now we can add candidates let's continue.
 
@@ -199,7 +221,7 @@ That's great :clap:, Now we can add candidates let's continue.
 ### List Candidate Function
 Now let's try to list the existing candidate so that our callers can choose which to vote to, Go back to your editor inside the contract implementation let's add another function
 
-```
+```rust
 	pub fn add_candidate(&mut self, name: String) -> String {
        ...
     }
@@ -213,13 +235,15 @@ Here we just need the keys of the map as it's the names of our candidates so let
 #### Build and Deploy again 
 Then in your terminal run 
 
-```
+```console
 near call voting.YOUR_ACCOUNT.testnet list_candidate '' --accountId YOUR_ACCOUNT.testnet`
 ```
 
 It should return to you an array of names for the candidates, like below
 
-```[ 'Wagih' ]```
+```console
+[ 'Wagih' ]
+```
 
 ![image](https://user-images.githubusercontent.com/1478503/143577129-825776d3-833e-4411-8db1-4d506c8feef0.png)
 
@@ -228,7 +252,7 @@ It should return to you an array of names for the candidates, like below
 
 ### Vote Function
 Now we can add and list candidates let' try to implement the voting function, back to your contract add the following function:
-```
+```rust
 	pub fn list_candidates(&mut self) -> Vec<String> {    
 		...
 	}
@@ -259,20 +283,20 @@ Also as you can see if you passed all the guards then we will add you to our vot
 Wow :star_struck: That's amazing let's try it.
 #### Build and Deploy again 
 Then in your terminal call the vote function like below:
-```
+```console
 near call voting.YOUR_ACCOUNT.testnet add_vote '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet
 ```
 
 it should print:
 
-```
+```console
 'Voted For Wagih Total of 1!'
 ```
 
 ![image](https://user-images.githubusercontent.com/1478503/143577205-88f640c0-df07-45a3-a129-8b8f895faaf7.png)
 
 Try again the same command and you should get 
-```
+```console
 'You have already voted'
 ```
 
@@ -280,18 +304,18 @@ Try again the same command and you should get
 
 
 Try again the same command and with an un-existing candidate 
-```
+```console
 near call voting.YOUR_ACCOUNT.testnet add_vote '{"name": "NEAR"}' --accountId YOUR_ACCOUNT.testnet
 ```
 ```
 "Candidate doesn't exist"
-```
+```console
 Great :clap:, Let's go to our last function :sweat_smile:	
 
 ### Get Stats Function
 Now that we have everything in place and people can vote, we need to see the results, Let's try to implement the Get Stats function, Back to your editor add the below function
 
-```
+```rust
 	pub fn add_vote(&mut self, name: String) -> String {
 		...
 	}
@@ -305,11 +329,11 @@ it's pretty easy actually we just need to return our candidate Map.
 #### Build and Deploy again final time I Promise :D
 
 Let's try it Call the get_stats function
-```
+```console
 near call voting.YOUR_ACCOUNT.testnet get_stats '' --accountId YOUR_ACCOUNT.testnet
 ```
 the result will be 
-```
+```console
 [ [ 'Wagih', 1 ] ]
 ```
 ![image](https://user-images.githubusercontent.com/1478503/143577322-26615f68-54e7-4b27-be8f-a0cf7b7b3167.png)
@@ -318,11 +342,11 @@ the result will be
 if you added another candidate with `near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Bedeawi"}' --accountId YOUR_ACCOUNT.testnet`
 
 Call the get stats again:
-```
+```console
 near call voting.YOUR_ACCOUNT.testnet get_stats '' --accountId YOUR_ACCOUNT.testnet
 ```
 the result will be 
-```
+```console
 [ [ 'Wagih', 1 ], [ 'Bedeawi', 0 ] ]
 ```
 
