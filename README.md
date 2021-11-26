@@ -1,6 +1,6 @@
-# Welcome to Create Voting Contract!
+# Welcome to Create Voting Contract! :star_struck:
 
-Hi! I'm Wagih ElBedeawi, Junior in both Rust and Near but I'm trying to share what I know, I welcome any improvements. 
+Hi! I'm Wagih ElBedeawi, Junior in both Rust and Near but I'm trying to share what I know, I welcome any improvements :hugs:. 
 
 # Creating a Rust Contract
 
@@ -139,41 +139,58 @@ Here we added a simple check trying to get the candidate by using the `get` func
 
 #### Build and Deploy
 1- Go to your terminal again make sure you are inside the project folder and run the build command
+
 ```cargo build --target wasm32-unknown-unknown --release```
+
 it should show compiling for a while then at the end
+
 ```Finished release [optimized] target(s) in 2.79s```
+
+![image](https://user-images.githubusercontent.com/1478503/143576652-31087371-e698-4625-80ff-dc652c6eefff.png)
+
+
 2- Deploy:
 
  - You can either deploy on your main account as bedeawi.testnet or create a subaccount like voting.bedeawi.testnet, creating the subaccount is easy just run the below but change `YOUR_ACCOUNT` with your account.
 
  - ```near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet```
+	
+![image](https://user-images.githubusercontent.com/1478503/143576911-a3e375c7-1991-42b7-a038-c157c97f7729.png)
 
  - now you can deploy your contract with
 
-	 ```near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID```
+ ```near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID```
 
-	 Change `$ID` with either `YOUR_ACCOUNT.testnet` or `voting.YOUR_ACCOUNT.testnet`
-	It should run successfully and print something like
+ Change `$ID` with either `YOUR_ACCOUNT.testnet` or `voting.YOUR_ACCOUNT.testnet`
+It should run successfully and print something like
 
-	```Done deploying to voting.YOUR_ACCOUNT.testnet```
+```Done deploying to voting.YOUR_ACCOUNT.testnet```
+
+![image](https://user-images.githubusercontent.com/1478503/143576746-3e2ef220-018b-4f4c-95fd-2a4c0414a048.png)
 
 3- let's test our contract by calling the `add_candidate` function:
-	run the below command in terminal
+run the below command in terminal
 
-	```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
+```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
 
-	This should result with this:
+This should result with this:
 
-	```Added Wagih !```
+```Added Wagih !```
 
-	Yaaay it's working!!!
+![image](https://user-images.githubusercontent.com/1478503/143576985-280aac83-4a41-433f-a6e8-be10739deec3.png)
+
+Yaaay it's working!!! :tada: :tada:
   
 4- Let's test adding Wagih again to check our Guard
-	run the same command again
-	```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
-	This time it should show this:
-	```Candidate already exists```
-	That's great now we can add candidates let's continue.
+run the same command again
+
+```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
+
+This time it should show this:
+
+```Candidate already exists```
+
+That's great :clap:, Now we can add candidates let's continue.
 
 
 ### List Candidate Function
@@ -192,13 +209,19 @@ Here we just need the keys of the map as it's the names of our candidates so let
 
 #### Build and Deploy again 
 Then in your terminal run 
+
 ```
 near call voting.YOUR_ACCOUNT.testnet list_candidate '' --accountId YOUR_ACCOUNT.testnet`
 ```
+
 It should return to you an array of names for the candidates, like below
+
 ```[ 'Wagih' ]```
 
-2 done 2 to go ;)
+![image](https://user-images.githubusercontent.com/1478503/143577129-825776d3-833e-4411-8db1-4d506c8feef0.png)
+
+
+:two: done :two: to go :wink:
 
 ### Vote Function
 Now we can add and list candidates let' try to implement the voting function, back to your contract add the following function:
@@ -230,20 +253,28 @@ Here I added some Guards first check if the candidate exists or not, the second 
 
 Also as you can see if you passed all the guards then we will add you to our voters Map, Then retrieve the Candidate Votes count increment it by 1 then reinsert it back to the candidates Map.
 
-Wow That's amazing let's try it.
+Wow :star_struck: That's amazing let's try it.
 #### Build and Deploy again 
 Then in your terminal call the vote function like below:
 ```
 near call voting.YOUR_ACCOUNT.testnet add_vote '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet
 ```
+
 it should print:
+
 ```
 'Voted For Wagih Total of 1!'
 ```
+
+![image](https://user-images.githubusercontent.com/1478503/143577205-88f640c0-df07-45a3-a129-8b8f895faaf7.png)
+
 Try again the same command and you should get 
 ```
 'You have already voted'
 ```
+
+![image](https://user-images.githubusercontent.com/1478503/143577264-bc3ee42b-fb55-4951-9104-248b192d7512.png)
+
 
 Try again the same command and with an un-existing candidate 
 ```
@@ -252,7 +283,7 @@ near call voting.YOUR_ACCOUNT.testnet add_vote '{"name": "NEAR"}' --accountId YO
 ```
 "Candidate doesn't exist"
 ```
-Great, Let's go to our last function
+Great :clap:, Let's go to our last function :sweat_smile:	
 
 ### Get Stats Function
 Now that we have everything in place and people can vote, we need to see the results, Let's try to implement the Get Stats function, Back to your editor add the below function
@@ -278,6 +309,9 @@ the result will be
 ```
 [ [ 'Wagih', 1 ] ]
 ```
+![image](https://user-images.githubusercontent.com/1478503/143577322-26615f68-54e7-4b27-be8f-a0cf7b7b3167.png)
+
+
 if you added another candidate with `near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Bedeawi"}' --accountId YOUR_ACCOUNT.testnet`
 
 Call the get stats again:
@@ -289,5 +323,5 @@ the result will be
 [ [ 'Wagih', 1 ], [ 'Bedeawi', 0 ] ]
 ```
 
-I hope it's clear and it Helps someone, the full file is in the repo and surely I welcome any improvements.
+I hope it's clear :sweat_smile:	 and it Helps someone :relaxed:	, the lib.rs file is in the repo and surely I welcome any improvements.
 
