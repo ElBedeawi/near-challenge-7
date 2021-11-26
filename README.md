@@ -5,10 +5,10 @@ Hi! I'm Wagih ElBedeawi, Junior in both Rust and Near but I'm trying to share wh
 # Creating a Rust Contract
 
 We will be following this [Intro](https://docs.near.org/docs/develop/contracts/rust/intro)
-## Prerequisites to complete this tutorial successfully, you'll need:
+## Prerequisites To complete this tutorial successfully, you'll need:
 
  1. Rust toolchain 
- 	Open your terminal and Run the below
+ 	Open your terminal and run the below
 	
 	 ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
 	 
@@ -70,8 +70,8 @@ Then lets' define our Contract Struct, what do we need here actually let's think
 we need callers:
 
  1. **To be list candidates**, *So we need like an array of candidates*
- 2. **To be able to vote for a candidate**, *So we need that array of candidates to have like a vote count, so lets change it to a Map or an UnorderedMap or a HashMap*
- 3. **To be limited to 1 vote**, *So we need a place to save the voters, so lets have another Map for Voters*
+ 2. **To be able to vote for a candidate**, *So we need that array of candidates to have like a vote count, so let's change it to a Map or an UnorderedMap or a HashMap*
+ 3. **To be limited to 1 vote**, *So we need a place to save the voters, so let's have another Map for Voters*
  4. **To get stats of the votes** *We can get that info from our candidates Map.*
 
 At the end it seems we need to have 4 functions in our contract & 2 Maps in our struct
@@ -98,10 +98,10 @@ impl Default for VotingContract {
     }
 }
 ```
-*each Map need a unique storage name so init them with any unique strings.*
+*each Map needs a unique storage name so init them with any unique strings.*
 
 ## The Contract implementation
-First let's define an empty contract
+First, let's define an empty contract
 ```
 #[near_bindgen]
 impl VotingContract {
@@ -121,9 +121,9 @@ impl VotingContract {
 ```
 
 ### Add Candidate Function
-we created the function `add_candidate`, it has a String parameter `name`, It get the contract candidates map and inserts the candidate name with a default value of zero as no one voted for the new candidate yet.
+we created the function `add_candidate`, it has a String parameter `name`, It gets the contract candidates map and inserts the candidate name with a default value of zero as no one voted for the new candidate yet.
 
-What if you tries to add an existing candidate ? Let's add a guard.
+What if you try to add an existing candidate? Let's add a guard.
 ```
 pub fn add_candidate(&mut self, name: String) -> String {
         
@@ -226,7 +226,7 @@ Now we can add and list candidates let' try to implement the voting function, ba
     }
 ```
 
-Here I added some Guards first check if the candidate exists or no, secondly check if the voter exists or no to prevent multiple votes from same voter.
+Here I added some Guards first check if the candidate exists or not, the second check if the voter exists or not to prevent multiple votes from the same voter.
 
 Also as you can see if you passed all the guards then we will add you to our voters Map, Then retrieve the Candidate Votes count increment it by 1 then reinsert it back to the candidates Map.
 
@@ -245,7 +245,7 @@ Try again the same command and you should get
 'You have already voted'
 ```
 
-Try again the same command and with un-existing candidate 
+Try again the same command and with an un-existing candidate 
 ```
 near call voting.YOUR_ACCOUNT.testnet add_vote '{"name": "NEAR"}' --accountId YOUR_ACCOUNT.testnet
 ```
@@ -289,5 +289,5 @@ the result will be
 [ [ 'Wagih', 1 ], [ 'Bedeawi', 0 ] ]
 ```
 
-I Hope it's clear and it Helps someone, the full file in in the repo and surely I welcome any improvements.
+I hope it's clear and it Helps someone, the full file is in the repo and surely I welcome any improvements.
 
