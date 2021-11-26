@@ -8,38 +8,44 @@ We will be following this [Intro](https://docs.near.org/docs/develop/contracts/r
 ## Prerequisites to complete this tutorial successfully, you'll need:
 
  1. Rust toolchain 
-		 Open your terminal and Run the below
-		 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-		 `source $HOME/.cargo/env`
-		 `rustup target add wasm32-unknown-unknown`
+ 	Open your terminal and Run the below
+	
+	 ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh```
+	 
+	 ```source $HOME/.cargo/env```
+	 
+	 ```rustup target add wasm32-unknown-unknown```
  2. A NEAR account
 		 As stated [Here](https://docs.near.org/docs/develop/contracts/rust/intro#creating-a-near-account) 
  3. NEAR command-line interface (near-cli)
-		 make sure you have node 12 or above
-		 `node -v`
-		 Then run 
-		 `npm  install -g near-cli`
+	 make sure you have node 12 or above
+
+	 ```node -v```
+
+	 Then run 
+
+	 ```npm  install -g near-cli```
 
 ## Create a new Rust project 
 
-	We will use the `cargo` command to create the project
-	`cargo new voting-app-tutorial`
-	`cd voting-app-tutorial`
+We will use the `cargo` command to create the project
+`cargo new voting-app-tutorial`
+`cd voting-app-tutorial`
 
-	this will create a src folder with a `main.rs` file and cargo.toml file
-	```
-	.  
-	├── Cargo.toml  
-	└── src  
-		└── main.rs
-	```
+this will create a src folder with a `main.rs` file and cargo.toml file
+```
+.  
+├── Cargo.toml  
+└── src  
+  └── main.rs
+```
 
-	delete the `main.rs` file
-	`rm src/main.rs`
+delete the `main.rs` file
+`rm src/main.rs`
 
-	create `lib.rs` file inside src folder
-	`cd src`
-	`touch  lib.rs`
+create `lib.rs` file inside src folder
+`cd src`
+`touch  lib.rs`
 
 ### Editing Cargo.toml
 open Cargo.toml file in your favorite editor then changes the values inside to your preference:
@@ -133,31 +139,31 @@ Here we added a simple check trying to get the candidate by using the `get` func
 
 #### Build and Deploy
 1- Go to your terminal again make sure you are inside the project folder and run the build command
-`cargo build --target wasm32-unknown-unknown --release`
+```cargo build --target wasm32-unknown-unknown --release```
 it should show compiling for a while then at the end
-`Finished release [optimized] target(s) in 2.79s`
+```Finished release [optimized] target(s) in 2.79s```
 2- Deploy:
 
  - You can either deploy on your main account as bedeawi.testnet or create a subaccount like voting.bedeawi.testnet, creating the subaccount is easy just run the below but change `YOUR_ACCOUNT` with your account.
- - `near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet`
+ - ```near create-account voting.YOUR_ACCOUNT.testnet --masterAccount YOUR_ACCOUNT.testnet```
  - now you can deploy your contract with
-	 `near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID`
+	 ```near deploy --wasmFile target/wasm32-unknown-unknown/release/voting_contract.wasm --accountId $ID```
 	 Change `$ID` with either `YOUR_ACCOUNT.testnet` or `voting.YOUR_ACCOUNT.testnet`
 	It should run successfully and print something like
-	`Done deploying to voting.YOUR_ACCOUNT.testnet
+	```Done deploying to voting.YOUR_ACCOUNT.testnet```
 
 3- let's test our contract by calling the `add_candidate` function:
 	run the below command in terminal
-	`near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet`
+	```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
 	This should result with this:
-	`Added Wagih !`
+	```Added Wagih !```
 	Yaaay it's working!!!
   
 4- Let's test adding Wagih again to check our Guard
 	run the same command again
-	`near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet`
+	```near call voting.YOUR_ACCOUNT.testnet add_candidate '{"name": "Wagih"}' --accountId YOUR_ACCOUNT.testnet```
 	This time it should show this:
-	`Candidate already exists`
+	```Candidate already exists```
 	That's great now we can add candidates let's continue.
 
 
@@ -181,7 +187,7 @@ Then in your terminal run
 near call voting.YOUR_ACCOUNT.testnet list_candidate '' --accountId YOUR_ACCOUNT.testnet`
 ```
 It should return to you an array of names for the candidates, like below
-`[ 'Wagih' ]`
+```[ 'Wagih' ]```
 
 2 done 2 to go ;)
 
