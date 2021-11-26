@@ -1,4 +1,4 @@
-# Welcome to Create Voting Contract Step by Step! :star_struck:
+# Creating Near Voting Smart Contract Step by Step Tutorial! :star_struck:
 
 Hi! I'm Wagih ElBedeawi, Junior in both Rust and Near but I'm trying to share what I know, I welcome any improvements :hugs:. 
 
