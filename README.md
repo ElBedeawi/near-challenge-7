@@ -47,6 +47,9 @@ create `lib.rs` file inside src folder
 `cd src`
 `touch  lib.rs`
 
+![image](https://user-images.githubusercontent.com/1478503/143580147-d40b8093-6136-417c-bc25-cb7877c3fa90.png)
+
+
 ### Editing Cargo.toml
 open Cargo.toml file in your favorite editor then changes the values inside to your preference:
 ```
